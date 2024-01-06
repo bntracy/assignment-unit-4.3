@@ -1,11 +1,16 @@
 console.log('***** Cart Functions *****');
 // Make sure to test all functions here in the JS file!
 // We want to see how you are testing your code!!!
-let basket = [];
+const basket = [];
+const maxItems = 5;
 
 function addItem(item) {
-    basket.push(item);
-    return true;
+    if (isFull()) {
+        return false; // basket is full, item not added
+    } else {
+        basket.push(item);
+        return true;
+    }
 } // end addItem function
 
 // testing
@@ -36,6 +41,42 @@ function empty() {
 console.log('Now to empty the basket:');
 empty();
 console.log('Basket, should be empty again:', basket);
+
+function isFull() {
+    if (basket.length < maxItems) {
+        return false;
+    } else {
+        return true;
+    }
+} // end isFull function
+
+// testing
+console.log('isFull, should be false as basket is empty:', isFull());
+addItem('salt');
+addItem('pepper');
+addItem('flour');
+addItem('sugar');
+console.log('isFull, should be false as basket contains four items:', isFull());
+addItem('butter');
+console.log('isFull, should be true as basket contains five items:', isFull());
+console.log(basket);
+console.log('try addItem when aleady full, should return false:', addItem('eggs'));
+console.log(basket); // checking that it wasn't added
+
+function removeItem(item) {
+    let itemIndex = basket.indexOf(item);
+    if (itemIndex === -1) {
+        return null;
+    } else {
+        let deleted = basket.splice(itemIndex, 1);
+        return deleted[0];
+    }
+} // end removeItem function
+
+// testing removeItem
+console.log('removeItem cinnamon -- should return null:', removeItem('cinnamon'));
+console.log('removeItem flour -- should return flour:', removeItem('flour'));
+listItems(); // should not contain flour
 
 
 // DO NOT MODIFY
